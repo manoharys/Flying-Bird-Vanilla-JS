@@ -36,7 +36,7 @@ function pressOff(e) {
 //Function which starts the gamePlay..
 function start() {
     player.inplay = true;
-    score.classList.toggle('hide');
+    score.classList.remove('hide');
     startScreen.classList.add('hide');
     gameMessage.classList.add('hide');
     gameMessage.innerHTML = "";
@@ -105,5 +105,7 @@ function playGame() {
 function endGame(bird) {
     gameMessage.classList.remove('hide');
     bird.setAttribute('style', "transform:rotate(180deg");
+    score.classList.add('hide');
     gameMessage.insertAdjacentHTML('beforeend', `<p style="color:red;letter-spacing:3px;font-family:fantasy;margin-bottom:10px;">GAME OVER!!!</p><br>YOUR SCORE = ${player.score}<br><br>play again`);
+   
 }
