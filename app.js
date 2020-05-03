@@ -40,7 +40,7 @@ function start() {
     startScreen.classList.add('hide');
     gameMessage.classList.add('hide');
     gameMessage.innerHTML = "";
-
+    player.touched = false;
     player.speed = 3;
     player.score = 0;
     gameArea.innerHTML = "";
@@ -95,6 +95,7 @@ function buildPipes(startPos) {
     gameArea.appendChild(pipe2);
 }
 //function which moves pipes
+
 function movePipes(bird) {
     let lines = document.querySelectorAll(".pipe");
     let counter = 0; //counts pips to remove
@@ -106,7 +107,8 @@ function movePipes(bird) {
             counter++;
         }
         if (isCollide(item, bird)) {
-            playGameOver(bird);
+            player.touched = true;
+            endGame(bird);
         }
     })
     counter = counter / 2;
@@ -114,6 +116,7 @@ function movePipes(bird) {
         buildPipes(0);
     }
 }
+
 
 //function which detects collision 
 function isCollide(a, b) {
@@ -154,7 +157,7 @@ function playGame() {
         player.y += player.speed;
         //Checking game over condition
         if (player.y > (gameArea.offsetHeight - 50)) {
-            player.inplay = false;
+            player.touched = true;
             endGame(bird);
 
         }
@@ -168,9 +171,12 @@ function playGame() {
 
 //EndGame function for termanation of the game
 function endGame(bird) {
-    gameMessage.classList.remove('hide');
-    bird.setAttribute('style', "transform:rotate(180deg");
-    score.classList.add('hide');
-    gameMessage.insertAdjacentHTML('beforeend', `<p style="color:red;letter-spacing:3px;font-family:fantasy;margin-bottom:10px;">GAME OVER!!!</p><br>YOUR SCORE = ${player.score}<br><br>play again`);
+    if (player.touched) {
+        player.inplay = false;
+        gameMessage.classList.remove('hide');
+        bird.setAttribute('style', "transform:rotate(180deg");
+        score.classList.add('hide');
+        gameMessage.insertAdjacentHTML('beforeend', `<p style="color:red;letter-spacing:3px;font-family:fantasy;margin-bottom:10px;">GAME OVER!!!</p><br>YOUR SCORE = ${player.score}<br><br>play again`);
 
+    }
 }
