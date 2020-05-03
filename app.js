@@ -79,7 +79,7 @@ function buildPipes(startPos) {
     pipe1.style.top = "0px";
     pipe1.x = pipe1.start;
     pipe1.id = player.pipe;
-  
+
     gameArea.appendChild(pipe1);
     let pipeSpace = Math.floor(Math.random() * 250) + 150;
     let pipe2 = document.createElement("div");
@@ -96,12 +96,30 @@ function buildPipes(startPos) {
 }
 
 
+function movePipes(bird) {
+    let lines = document.querySelectorAll(".pipe");
+    let counter = 0; //counts pips to remove
+    lines.forEach(function (item) {
+        console.log(item);
+        item.x -= player.speed;
+        item.style.left = item.x + "px";
+        if (item.x < 0) {
+            item.parentElement.removeChild(item);
+            counter++;
+        }
+    })
+    counter = counter / 2;
+    for (let x = 0; x < counter; x++) {
+        buildPipes(0);
+    }
+}
 
 function playGame() {
     if (player.inplay) {
         let bird = document.querySelector(".bird");
         let wing = document.querySelector(".wing");
         let move = false;
+        movePipes(bird);
         if (keys.ArrowLeft && player.x > 0) {
             player.x -= player.speed;
             move = true;
