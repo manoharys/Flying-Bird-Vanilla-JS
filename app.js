@@ -41,6 +41,8 @@ function start() {
     let bird = document.createElement('div');
     bird.setAttribute('class', 'bird');
     let wing = document.createElement('span')
+    wing.pos = 15;
+    wing.style.top = wing.pos + "px";
     wing.setAttribute('class', 'wing');
     bird.appendChild(wing)
     gameArea.appendChild(bird);
@@ -54,21 +56,28 @@ function playGame() {
     console.log(player);
     let bird = document.querySelector(".bird");
     let wing = document.querySelector(".wing");
-
+    let move = false;
     if (keys.ArrowLeft && player.x > 0) {
         player.x -= player.speed;
+        move = true;
     }
     if (keys.ArrowRight && player.x < (gameArea.offsetWidth - 100)) {
         player.x += player.speed;
+        move = true;
     }
     if (keys.ArrowUp && player.y > 10) {
         player.y -= player.speed;
+        move = true;
     }
     if (keys.ArrowDown && player.y < (gameArea.offsetHeight - 50)) {
         player.y += player.speed;
+        move = true;
     }
 
-
+    if(move){
+        wing.pos =(wing.pos == 15)?20:15;
+        wing.style.top = wing.pos + 'px';
+    }
 
 
 

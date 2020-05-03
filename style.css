@@ -72,9 +72,9 @@
 .wing{
     position: absolute;
     top:10px;
-    left:0;
-    width:25px;
-    height:32px;
+    left:-5px;
+    width:30px;
+    height:15px;
     background-color: gold;
-    border-radius:42px;
+    border-radius:7px;
 }
