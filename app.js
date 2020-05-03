@@ -3,6 +3,7 @@ const gameMessage = document.querySelector('.gameMessage');
 const startScreen = document.querySelector('.startScreen');
 const gameArea = document.querySelector('.gameArea');
 
+
 //Game trigger when user clicks this
 gameMessage.addEventListener('click', start);
 startScreen.addEventListener('click', start);
@@ -34,10 +35,15 @@ function pressOff(e) {
 
 //Function which starts the gamePlay..
 function start() {
+    player.inplay = true;
     score.classList.toggle('hide');
     startScreen.classList.add('hide');
+    gameMessage.classList.add('hide');
+    gameMessage.innerHTML = "";
+
     player.speed = 3;
     player.score = 0;
+    gameArea.innerHTML = "";
     //Creating bird element
     let bird = document.createElement('div');
     bird.setAttribute('class', 'bird');
@@ -54,40 +60,50 @@ function start() {
 
 
 function playGame() {
-    console.log(player);
-    let bird = document.querySelector(".bird");
-    let wing = document.querySelector(".wing");
-    let move = false;
-    if (keys.ArrowLeft && player.x > 0) {
-        player.x -= player.speed;
-        move = true;
-    }
-    if (keys.ArrowRight && player.x < (gameArea.offsetWidth - 100)) {
-        player.x += player.speed;
-        move = true;
-    }
-    if (keys.ArrowUp && player.y > 10) {
-        player.y -= player.speed * 2;
-        move = true;
-    }
-    if (keys.ArrowDown && player.y < (gameArea.offsetHeight - 50)) {
+    if (player.inplay) {
+        let bird = document.querySelector(".bird");
+        let wing = document.querySelector(".wing");
+        let move = false;
+        if (keys.ArrowLeft && player.x > 0) {
+            player.x -= player.speed;
+            move = true;
+        }
+        if (keys.ArrowRight && player.x < (gameArea.offsetWidth - 100)) {
+            player.x += player.speed;
+            move = true;
+        }
+        if (keys.ArrowUp && player.y > 10) {
+            player.y -= player.speed * 2;
+            move = true;
+        }
+        if (keys.ArrowDown && player.y < (gameArea.offsetHeight - 50)) {
+            player.y += player.speed;
+            move = true;
+        }
+
+        if (move) {
+            wing.pos = (wing.pos == 15) ? 20 : 15;
+            wing.style.top = wing.pos + 'px';
+        }
+
         player.y += player.speed;
-        move = true;
-    }
+        //Checking game over condition
+        if (player.y > (gameArea.offsetHeight - 50)) {
+            player.inplay = false;
+            endGame(bird);
 
-    if (move) {
-        wing.pos = (wing.pos == 15) ? 20 : 15;
-        wing.style.top = wing.pos + 'px';
+        }
+        bird.style.top = player.y + "px";
+        bird.style.left = player.x + "px";
+        window.requestAnimationFrame(playGame);
+        player.score++;
+        score.innerText = "Score : " + player.score;
     }
+}
 
-    player.y += player.speed;
-    //Checking game over condition
-    if (player.y > (gameArea.offsetHeight)) {
-        console.log("game over buddy now you can go home ");
-    }
-    bird.style.top = player.y + "px";
-    bird.style.left = player.x + "px";
-    window.requestAnimationFrame(playGame);
-    player.score++;
-    score.innerText = "Score : " + player.score;
+//EndGame function for termanation of the game
+function endGame(bird) {
+    gameMessage.classList.remove('hide');
+    bird.setAttribute('style', "transform:rotate(180deg");
+    gameMessage.insertAdjacentHTML('beforeend', `<p style="color:red;letter-spacing:3px;font-family:fantasy;margin-bottom:10px;">GAME OVER!!!</p><br>YOUR SCORE = ${player.score}<br><br>play again`);
 }
