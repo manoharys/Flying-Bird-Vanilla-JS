@@ -94,24 +94,33 @@ function buildPipes(startPos) {
 
     gameArea.appendChild(pipe2);
 }
-
-
+//function which moves pipes
 function movePipes(bird) {
     let lines = document.querySelectorAll(".pipe");
     let counter = 0; //counts pips to remove
     lines.forEach(function (item) {
-        console.log(item);
         item.x -= player.speed;
         item.style.left = item.x + "px";
         if (item.x < 0) {
             item.parentElement.removeChild(item);
             counter++;
         }
+        if (isCollide(item, bird)) {
+            playGameOver(bird);
+        }
     })
     counter = counter / 2;
     for (let x = 0; x < counter; x++) {
         buildPipes(0);
     }
+}
+
+//function which detects collision 
+function isCollide(a, b) {
+    let aRect = a.getBoundingClientRect();
+    let bRect = b.getBoundingClientRect();
+    return !(
+        (aRect.bottom < bRect.top) || (aRect.top > bRect.bottom) || (aRect.right < bRect.left) || (aRect.left > bRect.right))
 }
 
 function playGame() {
