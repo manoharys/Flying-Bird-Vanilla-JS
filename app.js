@@ -12,6 +12,15 @@ startScreen.addEventListener('click', start);
 let keys = {};
 let player = {};
 
+//Array which toggle the background images as per the score..
+let backgroundImg = ["url(./background_1.png)", "url(./background_2.png)", "url(./background_3.jpg)", "url(./background_4.png)"];
+
+setInterval(() => {
+    console.log("working")
+    gameArea.style.background = backgroundImg[Math.floor(Math.random() * 4)];
+    gameArea.style.transition = "1s ease";
+    gameArea.style.backgroundSize = '100% 100%';
+}, 5000);
 //Setting up event listeners to track keyBoard events
 document.addEventListener('keydown', pressOn);
 document.addEventListener('keyup', pressOff);
@@ -21,7 +30,7 @@ function pressOn(e) {
     e.preventDefault();
     //console.log(e.code);
     keys[e.code] = true;
-    console.log(keys)
+
 }
 
 
@@ -29,7 +38,7 @@ function pressOff(e) {
     e.preventDefault();
     //console.log(e.code);
     keys[e.code] = false;
-    console.log(keys)
+
 }
 
 
@@ -58,7 +67,7 @@ function start() {
     player.pipe = 0;
     let spacing = 300;
     let howMany = Math.floor((gameArea.offsetWidth) / spacing);
-    console.log(howMany);
+    //console.log(howMany);
     for (let x = 0; x < howMany; x++) {
         buildPipes(player.pipe * spacing);
     }
@@ -72,11 +81,11 @@ function buildPipes(startPos) {
     let pipe1 = document.createElement("div");
     pipe1.start = startPos + totalWidth;
     pipe1.classList.add("pipe");
-    pipe1.innerHTML = "<br>" + player.pipe;
+    pipe1.innerHTML =   player.pipe;
     pipe1.height = Math.floor(Math.random() * 350);
     pipe1.style.height = pipe1.height + "px";
     pipe1.style.left = pipe1.start + "px";
-    pipe1.style.top = "0px";
+    pipe1.style.top = "-10px";
     pipe1.x = pipe1.start;
     pipe1.id = player.pipe;
 
@@ -166,6 +175,7 @@ function playGame() {
         window.requestAnimationFrame(playGame);
         player.score++;
         score.innerText = "Score : " + player.score;
+
     }
 }
 
