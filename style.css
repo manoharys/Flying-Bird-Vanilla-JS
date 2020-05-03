@@ -60,6 +60,7 @@ body{
     background-color: black;
     color: white;
     text-align: center;
+    z-index: 100;
 }
 
 
@@ -97,6 +98,7 @@ body{
     text-align: center;
     font-family: fantasy;
     font-size: bold;
+    z-index: 100;
 }
 
 .pipe {
@@ -106,4 +108,5 @@ body{
     background-image: url(./pipe.png);
     background-repeat: no-repeat;
     background-size: 100% 100%;
+   
 }
