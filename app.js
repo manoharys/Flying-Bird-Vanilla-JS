@@ -33,6 +33,14 @@ function pressOff(e) {
 
 //Function which starts the gamePlay..
 function start() {
+    score.classList.toggle('hide');
     startScreen.classList.add('hide');
+    //Creating bird element
+    let bird = document.createElement('div');
+    bird.setAttribute('class', 'bird');
+    let wing = document.createElement('span')
+    wing.setAttribute('class', 'wing');
+    bird.appendChild(wing)
+    gameArea.appendChild(bird);
 
 }

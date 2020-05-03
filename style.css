@@ -1,5 +1,7 @@
 * {
     box-sizing: border-box;
+    padding: 0;
+    margin: 0;
 }
 
 
@@ -44,6 +46,7 @@
 }
 .score{
     position: absolute;
+    top: 0;
     width: 500px;
     height: 60px;
     font-size: 3.3rem;
@@ -52,3 +55,26 @@
     color: white;
     text-align: center;
 }
+
+.wing{
+    position: absolute;
+    top:10px;
+    left:0;
+    width:25px;
+    height:32px;
+    background-color: gold;
+    border-radius:42px;
+}
+
+.bird{
+    position: absolute;
+    top: 200px;
+    left:100px;
+    width: 50px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 1.5em;
+    background-image: url(./bird.png);
+    background-size: cover;
+}
+
