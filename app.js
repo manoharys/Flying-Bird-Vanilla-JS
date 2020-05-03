@@ -1,30 +1,38 @@
 const score = document.querySelector('.score');
 const gameMessage = document.querySelector('.gameMessage');
-const gameStart = document.querySelector('.startScreen');
+const startScreen = document.querySelector('.startScreen');
 const gameArea = document.querySelector('.gameArea');
 
 //Game trigger when user clicks this
 gameMessage.addEventListener('click', start);
-gameStart.addEventListener('click', start);
+startScreen.addEventListener('click', start);
 
+//key Object
+let keys = {};
 
-//Setting event listeners to track keyBoard events
+//Setting up event listeners to track keyBoard events
 document.addEventListener('keydown', pressOn);
 document.addEventListener('keyup', pressOff);
 
 //KeyBoard events
 function pressOn(e) {
-    console.log(e);
-    console.log(e.code);
+    e.preventDefault();
+    //console.log(e.code);
+    keys[e.code] = true;
+    console.log(keys)
 }
 
+
 function pressOff(e) {
-    console.log(e)
-    console.log(e.code);
+    e.preventDefault();
+    //console.log(e.code);
+    keys[e.code] = false;
+    console.log(keys)
 }
 
 
 //Function which starts the gamePlay..
 function start() {
-    console.log("Hyy there game started");
+    startScreen.classList.add('hide');
+
 }
