@@ -7,8 +7,9 @@ const gameArea = document.querySelector('.gameArea');
 gameMessage.addEventListener('click', start);
 startScreen.addEventListener('click', start);
 
-//key Object
+//Objects
 let keys = {};
+let player = {};
 
 //Setting up event listeners to track keyBoard events
 document.addEventListener('keydown', pressOn);
@@ -35,6 +36,7 @@ function pressOff(e) {
 function start() {
     score.classList.toggle('hide');
     startScreen.classList.add('hide');
+    player.speed = 2;
     //Creating bird element
     let bird = document.createElement('div');
     bird.setAttribute('class', 'bird');
@@ -42,5 +44,39 @@ function start() {
     wing.setAttribute('class', 'wing');
     bird.appendChild(wing)
     gameArea.appendChild(bird);
+    player.x = bird.offsetLeft;
+    player.y = bird.offsetTop;
+    window.requestAnimationFrame(playGame);
+}
 
+
+function playGame() {
+    console.log(player);
+    let bird = document.querySelector(".bird");
+    let wing = document.querySelector(".wing");
+
+    if (keys.ArrowLeft) {
+        player.x -= player.speed;
+    }
+    if (keys.ArrowRight) {
+        player.x += player.speed;
+    }
+    if (keys.ArrowUp) {
+        player.y -= player.speed;
+    }
+    if (keys.ArrowDown) {
+        player.y += player.speed;
+    }
+
+
+
+
+
+    bird.style.top = player.y + "px";
+    bird.style.left = player.x + "px";
+
+
+
+
+    window.requestAnimationFrame(playGame);
 }
