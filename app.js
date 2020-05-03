@@ -36,7 +36,7 @@ function pressOff(e) {
 function start() {
     score.classList.toggle('hide');
     startScreen.classList.add('hide');
-    player.speed = 2;
+    player.speed = 9;
     //Creating bird element
     let bird = document.createElement('div');
     bird.setAttribute('class', 'bird');
@@ -55,16 +55,16 @@ function playGame() {
     let bird = document.querySelector(".bird");
     let wing = document.querySelector(".wing");
 
-    if (keys.ArrowLeft) {
+    if (keys.ArrowLeft && player.x > 0) {
         player.x -= player.speed;
     }
-    if (keys.ArrowRight) {
+    if (keys.ArrowRight && player.x < (gameArea.offsetWidth - 100)) {
         player.x += player.speed;
     }
-    if (keys.ArrowUp) {
+    if (keys.ArrowUp && player.y > 10) {
         player.y -= player.speed;
     }
-    if (keys.ArrowDown) {
+    if (keys.ArrowDown && player.y < (gameArea.offsetHeight - 50)) {
         player.y += player.speed;
     }
 
