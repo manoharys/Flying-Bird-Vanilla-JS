@@ -78,16 +78,6 @@ function start() {
     window.requestAnimationFrame(playGame);
 }
 
-//changes background for everny 5 seconds
-if (player.inplay) {
-    setInterval(() => {
-        console.log("working")
-        gameArea.style.background = backgroundImg[Math.floor(Math.random() * 4)];
-        gameArea.style.transition = "1s ease";
-        gameArea.style.backgroundSize = '100% 100%';
-        point.play();
-    }, 10000);
-}
 
 
 function buildPipes(startPos) {
@@ -200,6 +190,18 @@ function playGame() {
 
     }
 }
+
+//changes background for everny 5 seconds
+
+setInterval(() => {
+    gameArea.style.background = backgroundImg[Math.floor(Math.random() * 4)];
+    gameArea.style.transition = "1s ease";
+    gameArea.style.backgroundSize = '100% 100%';
+    point.play();
+
+}, 10000);
+
+
 
 //EndGame function for termanation of the game
 function endGame(bird) {
