@@ -7,4 +7,6 @@
    Use arrow keys and space bar for bird movements.
    
  # live demo 
-   
+    
+   <a href = "https://manoharys.github.io/Flying-Bird-Vanilla-JS/"> CLICK HERE </a>
+  
