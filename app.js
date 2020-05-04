@@ -13,14 +13,8 @@ let keys = {};
 let player = {};
 
 //Array which toggle the background images as per the score..
-let backgroundImg = ["url(./background_1.png)", "url(./background_2.png)", "url(./background_3.jpg)", "url(./background_4.png)"];
+let backgroundImg = ["url(./background_1.png)", "url(./background_2.png)", "url(./background_3.jpg)", "url(./background_4.jpg)"];
 
-setInterval(() => {
-    console.log("working")
-    gameArea.style.background = backgroundImg[Math.floor(Math.random() * 4)];
-    gameArea.style.transition = "1s ease";
-    gameArea.style.backgroundSize = '100% 100%';
-}, 5000);
 //Setting up event listeners to track keyBoard events
 document.addEventListener('keydown', pressOn);
 document.addEventListener('keyup', pressOff);
@@ -53,6 +47,10 @@ function start() {
     player.speed = 3;
     player.score = 0;
     gameArea.innerHTML = "";
+    //default background
+    gameArea.style.background = backgroundImg[0];
+    gameArea.style.transition = "1s ease";
+    gameArea.style.backgroundSize = '100% 100%';
     //Creating bird element
     let bird = document.createElement('div');
     bird.setAttribute('class', 'bird');
@@ -74,6 +72,16 @@ function start() {
     window.requestAnimationFrame(playGame);
 }
 
+//changes background for everny 5 seconds
+
+setInterval(() => {
+    console.log("working")
+    gameArea.style.background = backgroundImg[Math.floor(Math.random() * 4)];
+    gameArea.style.transition = "1s ease";
+    gameArea.style.backgroundSize = '100% 100%';
+}, 10000);
+
+
 function buildPipes(startPos) {
     let totalHeight = gameArea.offsetHeight;
     let totalWidth = gameArea.offsetWidth;
@@ -81,7 +89,7 @@ function buildPipes(startPos) {
     let pipe1 = document.createElement("div");
     pipe1.start = startPos + totalWidth;
     pipe1.classList.add("pipe");
-    pipe1.innerHTML =   player.pipe;
+    pipe1.innerHTML = player.pipe;
     pipe1.height = Math.floor(Math.random() * 350);
     pipe1.style.height = pipe1.height + "px";
     pipe1.style.left = pipe1.start + "px";
