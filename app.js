@@ -3,6 +3,11 @@ const gameMessage = document.querySelector('.gameMessage');
 const startScreen = document.querySelector('.startScreen');
 const gameArea = document.querySelector('.gameArea');
 
+//setting up audio
+let die = new Audio('./audio/sfx_die.wav');
+let hit = new Audio('./audio/sfx_hit.wav');
+let point = new Audio('./audio/sfx_point.wav');
+let wingMove = new Audio('./audio/sfx_wing.wav');
 
 //Game trigger when user clicks this
 gameMessage.addEventListener('click', start);
@@ -11,6 +16,7 @@ startScreen.addEventListener('click', start);
 //Objects
 let keys = {};
 let player = {};
+
 
 //Array which toggle the background images as per the score..
 let backgroundImg = ["url(./background_1.png)", "url(./background_2.png)", "url(./background_3.jpg)", "url(./background_4.jpg)"];
@@ -73,13 +79,15 @@ function start() {
 }
 
 //changes background for everny 5 seconds
-
-setInterval(() => {
-    console.log("working")
-    gameArea.style.background = backgroundImg[Math.floor(Math.random() * 4)];
-    gameArea.style.transition = "1s ease";
-    gameArea.style.backgroundSize = '100% 100%';
-}, 10000);
+if (player.inplay) {
+    setInterval(() => {
+        console.log("working")
+        gameArea.style.background = backgroundImg[Math.floor(Math.random() * 4)];
+        gameArea.style.transition = "1s ease";
+        gameArea.style.backgroundSize = '100% 100%';
+        point.play();
+    }, 10000);
+}
 
 
 function buildPipes(startPos) {
@@ -89,7 +97,7 @@ function buildPipes(startPos) {
     let pipe1 = document.createElement("div");
     pipe1.start = startPos + totalWidth;
     pipe1.classList.add("pipe");
-    pipe1.innerHTML = player.pipe;
+
     pipe1.height = Math.floor(Math.random() * 350);
     pipe1.style.height = pipe1.height + "px";
     pipe1.style.left = pipe1.start + "px";
@@ -102,7 +110,7 @@ function buildPipes(startPos) {
     let pipe2 = document.createElement("div");
     pipe2.start = pipe1.start;
     pipe2.classList.add("pipe");
-    pipe2.innerHTML = "<br>" + player.pipe;
+
     pipe2.style.height = totalHeight - pipe1.height - pipeSpace + "px";
     pipe2.style.left = pipe1.start + "px";
     pipe2.style.bottom = "0px";
@@ -125,6 +133,7 @@ function movePipes(bird) {
         }
         if (isCollide(item, bird)) {
             player.touched = true;
+            hit.play();
             endGame(bird);
         }
     })
@@ -151,18 +160,22 @@ function playGame() {
         movePipes(bird);
         if (keys.ArrowLeft && player.x > 0) {
             player.x -= player.speed;
+            wingMove.play();
             move = true;
         }
         if (keys.ArrowRight && player.x < (gameArea.offsetWidth - 100)) {
             player.x += player.speed;
+            wingMove.play();
             move = true;
         }
-        if (keys.ArrowUp && player.y > 10) {
-            player.y -= player.speed * 2;
+        if ((keys.ArrowUp || keys.Space) && player.y > 10) {
+            player.y -= player.speed * 2
+            wingMove.play();
             move = true;
         }
         if (keys.ArrowDown && player.y < (gameArea.offsetHeight - 50)) {
             player.y += player.speed;
+            wingMove.play();
             move = true;
         }
 
@@ -175,6 +188,7 @@ function playGame() {
         //Checking game over condition
         if (player.y > (gameArea.offsetHeight - 50)) {
             player.touched = true;
+            die.play();
             endGame(bird);
 
         }
